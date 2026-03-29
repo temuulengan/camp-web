@@ -5,7 +5,8 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js",
+    "build": "rm -rf public && mkdir -p public && cp index.html public/ || true && cp -R css js pages assets public/ || true"
   },
   "dependencies": {
     "cors": "^2.8.5",
