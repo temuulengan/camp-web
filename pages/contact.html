@@ -15,12 +15,16 @@
   <body>
     <header>
       <div class="container navbar">
-        <a class="logo" href="../index.html">Багабаян-Энхийн төлөө цогцолбор төв</a>
+        <a class="logo" href="../index.html">
+          <img src="/images/Untitled design (5).png" alt="Багабаян-Энхийн логo" />
+          <span class="logo-text">Багабаян-Энхийн төлөө цогцолбор төв</span>
+        </a>
         <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
           ☰ Цэс
         </button>
         <ul class="nav-links" id="primary-navigation">
           <li><a href="about.html">Бидний тухай</a></li>
+          <li><a href="/news.html">Мэдээ мэдээлэл</a></li>
           <li><a href="https://legalinfo.mn/mn" target="_blank" rel="noopener">Хууль, эрх зүй</a></li>
           <li>
             <a
@@ -32,6 +36,14 @@
           </li>
           <li><a href="https://www.11-11.mn/" target="_blank" rel="noopener">11-11 төв</a></li>
           <li><a href="contact.html" class="active">Холбогдох</a></li>
+          <li>
+            <a class="profile-icon" id="navProfile" href="/admin/login.html" title="Admin">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 12c2.7614 0 5-2.2386 5-5s-2.2386-5-5-5-5 2.2386-5 5 2.2386 5 5 5z" fill="#1E88E5" />
+                <path d="M4 20c0-4.4183 3.5817-8 8-8s8 3.5817 8 8v1H4v-1z" fill="#4FC3F7" />
+              </svg>
+            </a>
+          </li>
         </ul>
       </div>
     </header>
@@ -39,7 +51,7 @@
     <main class="container">
       <section class="section fade-up" data-animate>
         <h1 class="section-title">Холбогдох</h1>
-        <p class="section-subtitle">Холбоо барих мэдээлэл (түр placeholder мэдээлэл).</p>
+        <p class="section-subtitle">Холбоо барих мэдээлэл</p>
       </section>
 
       <section class="section contact-grid fade-up" data-animate>
@@ -60,23 +72,24 @@
       <section class="section fade-up" data-animate>
         <h2 class="section-title">Санал хүсэлт илгээх</h2>
         <div class="contact-grid">
-          <form>
+          <form id="contactForm">
             <label>
               Нэр
-              <input type="text" name="name" placeholder="Таны нэр" />
+              <input type="text" name="name" placeholder="Таны нэр" required />
             </label>
             <label>
               И-мэйл
-              <input type="email" name="email" placeholder="name@example.com" />
+              <input type="email" name="email" placeholder="name@example.com" required />
             </label>
             <label>
               Мессеж
-              <textarea name="message" placeholder="Санал хүсэлтээ бичнэ үү"></textarea>
+              <textarea name="message" placeholder="Санал хүсэлтээ бичнэ үү" required></textarea>
             </label>
             <button class="button" type="submit">Илгээх</button>
+            <div id="contactStatus" style="margin-top:10px;color:#2e7d32;display:none"></div>
           </form>
           <div class="hero-image">
-            <img src="../assets/images/slide-09.jpg" alt="Амрагчдыг хүлээн авах орчин" />
+            <img src="/images/Screenshot 2026-03-28 at 23.03.01.png" alt="Амрагчдыг хүлээн авах орчин" />
           </div>
         </div>
       </section>
@@ -91,5 +104,32 @@
     </footer>
 
     <script src="../js/main.js" defer></script>
+    <script>
+      (function(){
+        const p = document.getElementById('navProfile'); if(!p) return; p.href = '/admin/login.html';
+        async function check(){ try{ const r = await fetch('/api/auth/check',{credentials:'include'}); if(!r.ok) return; const j = await r.json(); p.dataset.auth = j.authenticated ? 'true':'false'; }catch(e){ p.dataset.auth='false'; } }
+        p.addEventListener('click', async (ev)=>{ ev.preventDefault(); try{ const r = await fetch('/api/auth/check',{credentials:'include'}); if(r.ok){ const j = await r.json(); if(j.authenticated) return window.location.href='/admin/dashboard.html'; } }catch(e){} window.location.href='/admin/login.html'; });
+
+        // contact form submit via fetch
+        const form = document.getElementById('contactForm');
+        if(form){
+          form.addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            const status = document.getElementById('contactStatus'); status.style.display='none';
+            const data = { name: form.name.value.trim(), email: form.email.value.trim(), message: form.message.value.trim() };
+            try{
+              const res = await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+              const j = await res.json();
+              if(res.ok && j.ok){
+                status.style.color = '#2e7d32'; status.textContent = j.sent ? 'Мессеж амжилттай илгээгдлээ.' : 'Мессеж хадгалагдсан. Админ хянаж үзнэ.'; status.style.display='block';
+                form.reset();
+              } else {
+                status.style.color = '#c62828'; status.textContent = j.error || 'Алдаа гарлаа'; status.style.display='block';
+              }
+            }catch(err){ status.style.color='#c62828'; status.textContent='Сервер рүү холбогдохад алдаа гарлаа'; status.style.display='block'; }
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

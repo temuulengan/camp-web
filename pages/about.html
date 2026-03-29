@@ -15,12 +15,16 @@
   <body>
     <header>
       <div class="container navbar">
-        <a class="logo" href="../index.html">Багабаян-Энхийн төлөө цогцолбор төв</a>
+        <a class="logo" href="../index.html">
+          <img src="/images/Untitled design (5).png" alt="Багабаян-Энхийн логo" />
+          <span class="logo-text">Багабаян-Энхийн төлөө цогцолбор төв</span>
+        </a>
         <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
           ☰ Цэс
         </button>
         <ul class="nav-links" id="primary-navigation">
           <li><a href="about.html" class="active">Бидний тухай</a></li>
+          <li><a href="/news.html">Мэдээ мэдээлэл</a></li>
           <li><a href="https://legalinfo.mn/mn" target="_blank" rel="noopener">Хууль, эрх зүй</a></li>
           <li>
             <a
@@ -32,6 +36,14 @@
           </li>
           <li><a href="https://www.11-11.mn/" target="_blank" rel="noopener">11-11 төв</a></li>
           <li><a href="contact.html">Холбогдох</a></li>
+          <li>
+            <a class="profile-icon" id="navProfile" href="/admin/login.html" title="Admin">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 12c2.7614 0 5-2.2386 5-5s-2.2386-5-5-5-5 2.2386-5 5 2.2386 5 5 5z" fill="#1E88E5" />
+                <path d="M4 20c0-4.4183 3.5817-8 8-8s8 3.5817 8 8v1H4v-1z" fill="#4FC3F7" />
+              </svg>
+            </a>
+          </li>
         </ul>
       </div>
     </header>
@@ -43,6 +55,9 @@
           “Багабаян-Энхийн төлөө цогцолбор төв” ТӨААТҮГ-ын түүх, өнөөгийн байдал, үйлчилгээ,
           давуу талыг дараах байдлаар танилцуулж байна.
         </p>
+        <div class="about-image">
+          <img src="/images/Screenshot 2026-03-28 at 23.03.01.png" alt="Багабаян-Энхийн орчин" />
+        </div>
       </section>
 
       <section id="history" class="section fade-up" data-animate>
@@ -178,5 +193,12 @@
     </footer>
 
     <script src="../js/main.js" defer></script>
+    <script>
+      (function(){
+        const p = document.getElementById('navProfile'); if(!p) return; p.href = '/admin/login.html';
+        async function check(){ try{ const r = await fetch('/api/auth/check',{credentials:'include'}); if(!r.ok) return; const j = await r.json(); p.dataset.auth = j.authenticated ? 'true':'false'; }catch(e){ p.dataset.auth='false'; } }
+        p.addEventListener('click', async (ev)=>{ ev.preventDefault(); try{ const r = await fetch('/api/auth/check',{credentials:'include'}); if(r.ok){ const j = await r.json(); if(j.authenticated) return window.location.href='/admin/dashboard.html'; } }catch(e){} window.location.href='/admin/login.html'; });
+      })();
+    </script>
   </body>
 </html>

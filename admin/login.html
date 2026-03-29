@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin Login</title>
+    <style>
+      body{font-family:Inter,Segoe UI,Arial;background:#f4f7fb;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+      .card{background:#fff;padding:28px;border-radius:8px;box-shadow:0 8px 24px rgba(18,72,138,0.08);width:360px}
+      h1{margin:0 0 12px;font-size:20px;color:#1E88E5}
+      label{display:block;margin-top:12px;font-size:13px}
+      input{width:100%;padding:10px;margin-top:6px;border:1px solid #e0e0e0;border-radius:6px}
+      button{margin-top:16px;width:100%;padding:10px;background:#1E88E5;color:#fff;border:none;border-radius:6px;font-weight:600}
+      .error{color:#d32f2f;margin-top:10px}
+      .back-link{position:fixed;top:18px;left:18px;display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:transparent;color:#1E88E5;text-decoration:none;border:1px solid rgba(30,136,229,0.08);font-weight:600}
+      .back-link svg{display:block}
+      .back-link:hover{background:rgba(31,133,229,0.06)}
+    </style>
+  </head>
+  <body>
+    <a class="back-link" href="/index.html" aria-label="Back to homepage">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="#1E88E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Буцах
+    </a>
+
+    <form class="card" method="POST" action="/admin/login">
+      <h1>Админ нэвтрэх</h1>
+      <label>Нэвтрэх нэр<input name="username" required></label>
+      <label>Нууц үг<input name="password" type="password" required></label>
+      <button type="submit">Нэвтрэх</button>
+      <div id="error" class="error" style="display:none">Нэвтрэх алдаа — нэвтрэх нэр эсвэл нууц үг буруу.</div>
+    </form>
+    <script>
+      // show error if query contains error=1
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('error')) document.getElementById('error').style.display = 'block';
+    </script>
+  </body>
+</html>

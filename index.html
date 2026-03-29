@@ -15,12 +15,16 @@
   <body>
     <header>
       <div class="container navbar">
-        <a class="logo" href="index.html">Багабаян-Энхийн төлөө цогцолбор төв</a>
+        <a class="logo" href="index.html">
+          <img src="/images/Untitled design (5).png" alt="Багабаян-Энхийн логo" />
+          <span class="logo-text">Багабаян-Энхийн төлөө цогцолбор төв</span>
+        </a>
         <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
           ☰ Цэс
         </button>
         <ul class="nav-links" id="primary-navigation">
           <li><a href="pages/about.html">Бидний тухай</a></li>
+          <li><a href="/news.html">Мэдээ мэдээлэл</a></li>
           <li><a href="https://legalinfo.mn/mn" target="_blank" rel="noopener">Хууль, эрх зүй</a></li>
           <li>
             <a
@@ -31,16 +35,26 @@
             >
           </li>
           <li><a href="https://www.11-11.mn/" target="_blank" rel="noopener">11-11 төв</a></li>
+          <li><a href="https://mod.gov.mn/" target="_blank" rel="noopener">БХЯ</a></li>
           <li><a href="pages/contact.html">Холбогдох</a></li>
+          <li>
+            <a class="profile-icon" id="navProfile" href="/admin/login.html" title="Admin">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 12c2.7614 0 5-2.2386 5-5s-2.2386-5-5-5-5 2.2386-5 5 2.2386 5 5 5z" fill="#1E88E5" />
+                <path d="M4 20c0-4.4183 3.5817-8 8-8s8 3.5817 8 8v1H4v-1z" fill="#4FC3F7" />
+              </svg>
+            </a>
+          </li>
         </ul>
       </div>
     </header>
 
     <main>
-      <section class="hero container fade-up" data-animate>
+      <section class="hero fade-up" data-animate>
+        <div class="hero-inner">
         <div class="hero-text">
           <h1>Багабаян-Энхийн төлөө цогцолбор төв</h1>
-          <p>
+          <p id="homepage-intro">
             “Багабаян-Энхийн Төлөө Цогцолбор төв” ТӨААТҮГ нь Сүхбаатар дүүргийн XIX хорооны
             “Багабаянгийн ам”-нд батлан хамгаалах тусгай хэрэгцээний 81.7 га газрыг эзэмшиж,
             амралт, үйлчилгээний цогцолбороор үйлчилж байна.
@@ -51,7 +65,8 @@
           </div>
         </div>
         <div class="hero-image">
-          <img src="assets/images/slide-03.jpg" alt="Багабаян-Энхийн төлөө цогцолбор төвийн орчин" />
+          <img src="/images/Screenshot 2026-03-28 at 23.03.01.png" alt="Багабаян-Энхийн төлөө цогцолбор төвийн орчин" />
+        </div>
         </div>
       </section>
 
@@ -81,12 +96,14 @@
       </section>
 
       <section class="section container fade-up" data-animate>
-        <h2 class="section-title">Орчны гэрэл зураг</h2>
-        <div class="image-strip">
-          <img src="assets/images/slide-04.jpg" alt="Төвийн түүхэн зураг" />
-          <img src="assets/images/slide-08.jpg" alt="Энхийн төлөө цогцолбор" />
-          <img src="assets/images/slide-10.jpg" alt="Амрагчдын үйлчилгээний орчин" />
-          <img src="assets/images/slide-12.jpg" alt="Дэд бүтцийн боломж" />
+        <h2 class="section-title">Уриалга</h2>
+        <div class="posters-grid">
+          <a class="poster" href="/images/IMG_8F4DE821FE9B-1.jpeg" target="_blank" rel="noopener">
+            <img src="/images/IMG_8F4DE821FE9B-1.jpeg" alt="Poster 1" />
+          </a>
+          <a class="poster" href="/images/БАТЛАН ХАМГААЛАХ ЯАМ “2026 ОН ХҮН ТӨВТЭЙ ХӨГЖИЛ ШИНЭЧЛЭЛИЙН ЖИЛ”.png" target="_blank" rel="noopener">
+            <img src="/images/БАТЛАН ХАМГААЛАХ ЯАМ “2026 ОН ХҮН ТӨВТЭЙ ХӨГЖИЛ ШИНЭЧЛЭЛИЙН ЖИЛ”.png" alt="Poster 2" />
+          </a>
         </div>
       </section>
     </main>
@@ -100,5 +117,16 @@
     </footer>
 
     <script src="js/main.js" defer></script>
+    <script>
+      // load homepage intro from server (editable by admin)
+      (async function(){
+        try{
+          const r = await fetch('/api/homepage', { credentials: 'include' });
+          if(!r.ok) return;
+          const j = await r.json();
+          if(j.intro) document.getElementById('homepage-intro').textContent = j.intro;
+        }catch(e){}
+      })();
+    </script>
   </body>
 </html>
