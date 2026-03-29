@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const session = require('express-session');
 const path = require('path');
 const multer = require('multer');
@@ -13,6 +14,9 @@ const PORT = process.env.PORT || 8000;
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// enable CORS for all origins (adjust in production for security)
+app.use(cors({ origin: '*' }));
 
 app.use(session({
   secret: 'change_this_secret_for_prod',
