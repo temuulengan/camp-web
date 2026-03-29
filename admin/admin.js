@@ -4,7 +4,7 @@
   const homeEditBtn = document.getElementById('editHome');
 
   async function fetchNews(){
-    const res = await fetch('/api/news', { credentials: 'include' });
+    const res = await fetch('https://camp-web-backend.onrender.com/api/news', { credentials: 'include' });
     return res.json();
   }
 
@@ -20,7 +20,7 @@
       edit.onclick = ()=>openEditor('edit', item);
       del.onclick = async ()=>{
         if(!confirm('Устгахдаа итгэлтэй байна уу?')) return;
-        await fetch('/api/news/'+item.id,{method:'DELETE', credentials:'include'});
+          await fetch('https://camp-web-backend.onrender.com/api/news/'+item.id,{method:'DELETE', credentials:'include'});
         await reload();
       };
       controls.appendChild(edit); controls.appendChild(del);
@@ -114,9 +114,9 @@
       if (file) fd.append('image', file);
       try{
         if(mode==='edit'){
-          await fetch('/api/news/'+item.id,{method:'PUT',body:fd, credentials:'include'});
+          await fetch('https://camp-web-backend.onrender.com/api/news/'+item.id,{method:'PUT',body:fd, credentials:'include'});
         } else {
-          await fetch('/api/news',{method:'POST',body:fd, credentials:'include'});
+          await fetch('https://camp-web-backend.onrender.com/api/news',{method:'POST',body:fd, credentials:'include'});
         }
         Modal.close();
         await reload();
@@ -134,7 +134,7 @@
   addBtn.addEventListener('click', ()=>openEditor('add'));
 
   homeEditBtn.addEventListener('click', async ()=>{
-    const res = await fetch('/api/homepage', { credentials: 'include' });
+    const res = await fetch('https://YOUR-RENDER-URL.onrender.com/api/homepage', { credentials: 'include' });
     const obj = await res.json();
     const wrap = document.createElement('div');
     wrap.innerHTML = `<div class="field-row"><label>Intro paragraph</label><textarea class="input" rows="6">${obj.intro||''}</textarea></div>`;
@@ -148,7 +148,7 @@
     save.onclick = async ()=>{
       save.disabled=true; save.textContent='Saving...';
       const intro = wrap.querySelector('textarea').value;
-      await fetch('/api/homepage',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({intro}), credentials:'include'});
+      await fetch('https://YOUR-RENDER-URL.onrender.com/api/homepage',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({intro}), credentials:'include'});
       save.disabled=false; save.textContent='Save';
       Modal.close();
       alert('Homepage intro updated');

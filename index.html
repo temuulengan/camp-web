@@ -121,7 +121,7 @@
       // load homepage intro from server (editable by admin)
       (async function(){
         try{
-          const r = await fetch('/api/homepage', { credentials: 'include' });
+          const r = await fetch('https://YOUR-RENDER-URL.onrender.com/api/homepage', { credentials: 'include' });
           if(!r.ok) return;
           const j = await r.json();
           if(j.intro) document.getElementById('homepage-intro').textContent = j.intro;

@@ -36,7 +36,7 @@
         </div>
         <div style="display:flex;gap:12px;align-items:center">
           <button id="editHome" class="btn-ghost">Нүүр хуудас засах</button>
-          <a href="/admin/logout" class="btn-ghost">Logout</a>
+          <a id="logoutLink" href="/admin/logout" class="btn-ghost">Гарах</a>
         </div>
       </div>
 
@@ -53,5 +53,12 @@
 
     <script src="/components/modal.js" defer></script>
     <script src="/admin/admin.js" defer></script>
+    <script>
+      // mark admin flag in localStorage when dashboard loads (server-side session already protects this page)
+      try{ localStorage.setItem('isAdmin','true'); }catch(e){}
+      // clear flag when clicking logout
+      const logout = document.getElementById('logoutLink');
+      if(logout) logout.addEventListener('click', ()=>{ try{ localStorage.removeItem('isAdmin'); }catch(e){} });
+    </script>
   </body>
 </html>

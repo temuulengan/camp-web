@@ -1,6 +1,6 @@
 (async function(){
   async function getNews(){
-    const r = await fetch('/api/news', { credentials: 'include' });
+    const r = await fetch('https://camp-web-backend.onrender.com/api/news', { credentials: 'include' });
     if(!r.ok) return [];
     return r.json();
   }
@@ -51,7 +51,7 @@
   grid.querySelectorAll('button[data-id]').forEach(btn=>{
     btn.addEventListener('click', async (e)=>{
       const id = btn.getAttribute('data-id');
-      const r = await fetch('/api/news/'+id, { credentials: 'include' });
+      const r = await fetch('https://camp-web-backend.onrender.com/api/news/'+id, { credentials: 'include' });
       if(!r.ok) return alert('Not found');
       const item = await r.json();
       openDetail(item);

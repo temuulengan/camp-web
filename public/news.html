@@ -21,7 +21,7 @@
 
     <script>
       async function load(){
-        const res = await fetch('/api/news', { credentials: 'include' });
+        const res = await fetch('https://camp-web-backend.onrender.com/api/news', { credentials: 'include' });
         const data = await res.json();
         const list = document.getElementById('list');
         list.innerHTML = '';

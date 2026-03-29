@@ -73,8 +73,8 @@
     <script>
       (function(){
         const p = document.getElementById('navProfile'); if(!p) return; p.href = '/admin/login.html';
-        async function check(){ try{ const r = await fetch('/api/auth/check',{credentials:'include'}); if(!r.ok) return; const j = await r.json(); p.dataset.auth = j.authenticated ? 'true':'false'; }catch(e){ p.dataset.auth='false'; } }
-        p.addEventListener('click', async (ev)=>{ ev.preventDefault(); try{ const r = await fetch('/api/auth/check',{credentials:'include'}); if(r.ok){ const j = await r.json(); if(j.authenticated) return window.location.href='/admin/dashboard.html'; } }catch(e){} window.location.href='/admin/login.html'; });
+        function check(){ p.dataset.auth = (localStorage.getItem('isAdmin') === 'true') ? 'true' : 'false'; }
+        p.addEventListener('click', (ev)=>{ ev.preventDefault(); const isAdmin = localStorage.getItem('isAdmin') === 'true'; if(isAdmin) window.location.href='/admin/dashboard.html'; else window.location.href='/admin/login.html'; });
       })();
     </script>
   </body>

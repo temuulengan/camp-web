@@ -34,6 +34,8 @@
       // show error if query contains error=1
       const params = new URLSearchParams(window.location.search);
       if (params.get('error')) document.getElementById('error').style.display = 'block';
+      // clear admin flag on login page load
+      try{ localStorage.removeItem('isAdmin'); }catch(e){}
     </script>
   </body>
 </html>
