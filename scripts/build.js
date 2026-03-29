@@ -41,7 +41,7 @@ async function copy(src, dest){
   await rmrf(out);
   await ensureDir(out);
   // Copy common static assets
-  const sources = ['index.html','css','js','pages','assets','images','public/uploads'];
+  const sources = ['index.html','news.html','css','js','pages','admin','assets','images','public/uploads'];
   for (const s of sources) {
     await copy(s);
   }
