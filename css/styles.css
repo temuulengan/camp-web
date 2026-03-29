@@ -274,6 +274,12 @@ header {
   box-shadow: 0 10px 30px rgba(14, 54, 114, 0.06);
 }
 
+/* Ensure paragraphs in cards have space before buttons */
+.card p { margin-bottom: 1rem; }
+
+/* Give buttons inside cards breathing room */
+.card .button { display: inline-block; margin-top: 12px; }
+
 /* News specific cards */
 .news-grid{display:grid;gap:18px}
 .news-card{background:var(--white);border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(14,54,114,0.06);transition:transform .18s,box-shadow .18s}
