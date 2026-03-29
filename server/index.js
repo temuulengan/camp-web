@@ -6,7 +6,6 @@ const multer = require('multer');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const newsStore = require('./newsStore');
-const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
